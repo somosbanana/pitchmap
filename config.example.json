@@ -1,0 +1,67 @@
+{
+  "_comment": "Copy to config.json and fill it in. Claude can fill it for you: run the pitchmap skill and describe what you sell.",
+
+  "mode": "fix",
+  "_mode_help": "fix = you sell the fix for a problem their website shows (web design, SEO, booking...). offer = you sell any product or service to businesses and only need a relevant reason to write.",
+
+  "business": {
+    "name": "Your Studio",
+    "website": "yourstudio.com",
+    "sender_name": "Alex",
+    "from": "Alex from Your Studio <hello@yourstudio.com>",
+    "own_domain": "yourstudio.com",
+    "postal_address": "Your real business address, City, Country",
+    "signature_html": ""
+  },
+
+  "search": {
+    "queries": ["plumber in Savannah, GA", "electrician in Savannah, GA"],
+    "reviews": false,
+    "skip_hosts": ["facebook.com", "instagram.com", "yelp.com", "linktr.ee", "wix.com", "business.site"]
+  },
+
+  "offer": {
+    "what": "clean, modern websites for local {plural}: mobile-first, secure, with a big \"Call now\" button and a quote form",
+    "prices": {"US": "$497", "CA": "C$699", "AU": "A$749", "NZ": "NZ$849", "UK": "£449", "default": "$497"},
+    "cta": "Happy to mock up a new homepage for you for free so you can see the difference before deciding anything. Want me to send one over?",
+    "only_with_signal": true
+  },
+
+  "signals": [
+    {"id": "no_https", "check": "no_https", "line": "your site doesn't load securely (no padlock), and some browsers warn visitors before they even see it"},
+    {"id": "not_mobile", "check": "not_mobile", "line": "the site isn't set up for phones, so on a mobile it shows up tiny and hard to tap"},
+    {"id": "old_copyright", "check": "old_copyright", "line": "the footer still says {year}, and some people take that as a sign the business might not be around anymore"},
+    {"id": "no_description", "check": "no_description", "line": "Google doesn't have a proper description for your site, so search results show a random chunk of text instead of a real pitch"},
+    {"id": "old_html", "check": "old_html", "line": "the site is built with very old code, which tends to look broken on today's phones"},
+    {"id": "no_booking", "check": "missing", "pattern": "book|booking|reserv|appointment|schedule", "line": "there's no way to book online, so every job starts with a phone call"},
+    {"id": "no_call_button", "check": "missing", "pattern": "href=[\"']tel:", "line": "there's no tap-to-call button, so people on a phone have to copy your number by hand"}
+  ],
+
+  "followups": [
+    "{hi}\n\nJust bumping this up in case it got buried. The offer's still open for {name}, no cost and no strings attached.\n\nWant me to go ahead? A quick \"sure\" is all I need.\n\n{sender}",
+    "{hi}\n\nI know inboxes get busy, so one last nudge about {name}. Happy to help, and if it's not for you, no worries at all.\n\n{sender}"
+  ],
+
+  "sending": {
+    "local_time": "05:30",
+    "daily_cap_per_country": 40,
+    "daily_cap_total": 200,
+    "followup_after_days": 3
+  },
+
+  "replies": {
+    "classifier_url": "http://ollama:11434/v1/chat/completions",
+    "classifier_model": "qwen2.5:3b",
+    "classifier_key": "",
+    "telegram_chat_id": "",
+    "interested": "{hi}\n\nGreat, thanks for getting back to me! I'll put it together and send it over within 48 hours.\n\nTalk soon,\n{sender}",
+    "price": "On price: it starts at {price}, one-time, depending on what you need.",
+    "fallback_question": "[answer their question here]"
+  },
+
+  "n8n": {
+    "data_table": "pitchmap_leads",
+    "intake_url": "https://n8n.yourdomain.com/webhook/pitchmap-intake",
+    "secret": "change-me-to-a-long-random-string"
+  }
+}

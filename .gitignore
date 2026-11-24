@@ -1,0 +1,5 @@
+config.json
+data/
+n8n/
+__pycache__/
+.env
